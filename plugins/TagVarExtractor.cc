@@ -256,15 +256,15 @@ TagVarExtractor::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup
         etaRels.push_back( fabs(JetInfo.TagVarCSV_trackEtaRel[iTrk]) );
 
       // sort the IP vectors in descending order and fill the branches based on the number of tracks
-      //std::sort( IP2Ds.begin(),IP2Ds.end(),std::greater<float>() );
-      //std::sort( IP3Ds.begin(),IP3Ds.end(),std::greater<float>() );
-      //std::sort( PtRel.begin(),PtRel.end(),std::greater<float>() );
-      //std::sort(DeltaR.begin(),DeltaR.end(),std::greater<float>() );
-      //std::sort(PtRatio.begin(),PtRatio.end(),std::greater<float>() );
-      //std::sort(JetDist.begin(),JetDist.end(),std::greater<float>() );
-      //std::sort(DecayLenVal.begin(),DecayLenVal.end(),std::greater<float>() );
+      std::sort( IP2Ds.begin(),IP2Ds.end(),std::greater<float>() );
+      std::sort( IP3Ds.begin(),IP3Ds.end(),std::greater<float>() );
+      std::sort( PtRel.begin(),PtRel.end(),std::greater<float>() );
+      std::sort( DeltaR.begin(),DeltaR.end(),std::greater<float>() );
+      std::sort( PtRatio.begin(),PtRatio.end(),std::greater<float>() );
+      std::sort( JetDist.begin(),JetDist.end(),std::greater<float>() );
+      std::sort( DecayLenVal.begin(),DecayLenVal.end(),std::greater<float>() );
       // sort etaRels in ascending order!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      //std::sort( etaRels.begin(),etaRels.end() ); //std::sort sorts in ascending order by default
+      std::sort( etaRels.begin(),etaRels.end() ); //std::sort sorts in ascending order by default
 
       int numTracks = JetInfo.TagVarCSV_jetNTracks[iJet];
       int numEtaRelTracks = JetInfo.TagVarCSV_jetNTracksEtaRel[iJet];
