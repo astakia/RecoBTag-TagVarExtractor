@@ -107,6 +107,10 @@ class TagVarExtractor : public edm::EDAnalyzer {
 //
 // static data member definitions
 //
+static float dummyTrack  = -99.0;
+static float dummyPtRel  = -1.0;
+static float dummyEtaRel = -1.0;
+static float dummy       = -0.1;
 
 //
 // constructors and destructor
@@ -211,22 +215,22 @@ TagVarExtractor::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup
 
       TagVarInfo.TagVarCSV_jetNTracks              = JetInfo.TagVarCSV_jetNTracks[iJet];
       TagVarInfo.TagVarCSV_jetNTracksEtaRel        = JetInfo.TagVarCSV_jetNTracksEtaRel[iJet];
-      TagVarInfo.TagVarCSV_trackSumJetEtRatio      = (JetInfo.TagVarCSV_trackSumJetEtRatio[iJet] < -1000. ? -1. : JetInfo.TagVarCSV_trackSumJetEtRatio[iJet]);
-      TagVarInfo.TagVarCSV_trackSumJetDeltaR       = (JetInfo.TagVarCSV_trackSumJetDeltaR[iJet] < -1000. ? -1. : JetInfo.TagVarCSV_trackSumJetDeltaR[iJet]);
-      TagVarInfo.TagVarCSV_trackSip2dValAboveCharm = (JetInfo.TagVarCSV_trackSip2dValAboveCharm[iJet] < -1000. ? -99. : JetInfo.TagVarCSV_trackSip2dValAboveCharm[iJet]);
-      TagVarInfo.TagVarCSV_trackSip2dSigAboveCharm = (JetInfo.TagVarCSV_trackSip2dSigAboveCharm[iJet] < -1000. ? -99. : JetInfo.TagVarCSV_trackSip2dSigAboveCharm[iJet]);
-      TagVarInfo.TagVarCSV_trackSip3dValAboveCharm = (JetInfo.TagVarCSV_trackSip3dValAboveCharm[iJet] < -1000. ? -99. : JetInfo.TagVarCSV_trackSip3dValAboveCharm[iJet]);
-      TagVarInfo.TagVarCSV_trackSip3dSigAboveCharm = (JetInfo.TagVarCSV_trackSip3dSigAboveCharm[iJet] < -1000. ? -99. : JetInfo.TagVarCSV_trackSip3dSigAboveCharm[iJet]);
-      TagVarInfo.TagVarCSV_vertexCategory          = (JetInfo.TagVarCSV_vertexCategory[iJet] < -1000. ? -1. : JetInfo.TagVarCSV_vertexCategory[iJet]);
+      TagVarInfo.TagVarCSV_trackSumJetEtRatio      = (JetInfo.TagVarCSV_trackSumJetEtRatio[iJet] < -1. ? -1. : JetInfo.TagVarCSV_trackSumJetEtRatio[iJet]);
+      TagVarInfo.TagVarCSV_trackSumJetDeltaR       = (JetInfo.TagVarCSV_trackSumJetDeltaR[iJet] < -1. ? -1. : JetInfo.TagVarCSV_trackSumJetDeltaR[iJet]);
+      TagVarInfo.TagVarCSV_trackSip2dValAboveCharm = (JetInfo.TagVarCSV_trackSip2dValAboveCharm[iJet] < -1. ? -1. : JetInfo.TagVarCSV_trackSip2dValAboveCharm[iJet]);
+      TagVarInfo.TagVarCSV_trackSip2dSigAboveCharm = (JetInfo.TagVarCSV_trackSip2dSigAboveCharm[iJet] < -99. ? -99. : JetInfo.TagVarCSV_trackSip2dSigAboveCharm[iJet]);
+      TagVarInfo.TagVarCSV_trackSip3dValAboveCharm = (JetInfo.TagVarCSV_trackSip3dValAboveCharm[iJet] < -1. ? -1. : JetInfo.TagVarCSV_trackSip3dValAboveCharm[iJet]);
+      TagVarInfo.TagVarCSV_trackSip3dSigAboveCharm = (JetInfo.TagVarCSV_trackSip3dSigAboveCharm[iJet] < -99. ? -99. : JetInfo.TagVarCSV_trackSip3dSigAboveCharm[iJet]);
+      TagVarInfo.TagVarCSV_vertexCategory          = (JetInfo.TagVarCSV_vertexCategory[iJet] < -1. ? -1. : JetInfo.TagVarCSV_vertexCategory[iJet]);
       TagVarInfo.TagVarCSV_jetNSecondaryVertices   = JetInfo.TagVarCSV_jetNSecondaryVertices[iJet];
-      TagVarInfo.TagVarCSV_vertexMass              = (JetInfo.TagVarCSV_vertexMass[iJet] < -1000. ? -1. : JetInfo.TagVarCSV_vertexMass[iJet]);
+      TagVarInfo.TagVarCSV_vertexMass              = (JetInfo.TagVarCSV_vertexMass[iJet] < -1. ? -1. : JetInfo.TagVarCSV_vertexMass[iJet]);
       TagVarInfo.TagVarCSV_vertexNTracks           = JetInfo.TagVarCSV_vertexNTracks[iJet];
-      TagVarInfo.TagVarCSV_vertexEnergyRatio       = (JetInfo.TagVarCSV_vertexEnergyRatio[iJet] < -1000. ? -1. : JetInfo.TagVarCSV_vertexEnergyRatio[iJet]);
-      TagVarInfo.TagVarCSV_vertexJetDeltaR         = (JetInfo.TagVarCSV_vertexJetDeltaR[iJet] < -1000. ? -1. : JetInfo.TagVarCSV_vertexJetDeltaR[iJet]);
-      TagVarInfo.TagVarCSV_flightDistance2dVal     = (JetInfo.TagVarCSV_flightDistance2dVal[iJet] = -9999. ? -1. : JetInfo.TagVarCSV_flightDistance2dVal[iJet]);
-      TagVarInfo.TagVarCSV_flightDistance2dSig     = (JetInfo.TagVarCSV_flightDistance2dSig[iJet] < -1000. ? -1. : JetInfo.TagVarCSV_flightDistance2dSig[iJet]);
-      TagVarInfo.TagVarCSV_flightDistance3dVal     = (JetInfo.TagVarCSV_flightDistance3dVal[iJet] < -1000. ? -1. : JetInfo.TagVarCSV_flightDistance3dVal[iJet]);
-      TagVarInfo.TagVarCSV_flightDistance3dSig     = (JetInfo.TagVarCSV_flightDistance3dSig[iJet] < -1000. ? -1. : JetInfo.TagVarCSV_flightDistance3dSig[iJet]);
+      TagVarInfo.TagVarCSV_vertexEnergyRatio       = (JetInfo.TagVarCSV_vertexEnergyRatio[iJet] < -1. ? -1. : JetInfo.TagVarCSV_vertexEnergyRatio[iJet]);
+      TagVarInfo.TagVarCSV_vertexJetDeltaR         = (JetInfo.TagVarCSV_vertexJetDeltaR[iJet] < -1. ? -1. : JetInfo.TagVarCSV_vertexJetDeltaR[iJet]);
+      TagVarInfo.TagVarCSV_flightDistance2dVal     = (JetInfo.TagVarCSV_flightDistance2dVal[iJet] < -1. ? -1. : JetInfo.TagVarCSV_flightDistance2dVal[iJet]);
+      TagVarInfo.TagVarCSV_flightDistance2dSig     = (JetInfo.TagVarCSV_flightDistance2dSig[iJet] < -1. ? -1. : JetInfo.TagVarCSV_flightDistance2dSig[iJet]);
+      TagVarInfo.TagVarCSV_flightDistance3dVal     = (JetInfo.TagVarCSV_flightDistance3dVal[iJet] < -1. ? -1. : JetInfo.TagVarCSV_flightDistance3dVal[iJet]);
+      TagVarInfo.TagVarCSV_flightDistance3dSig     = (JetInfo.TagVarCSV_flightDistance3dSig[iJet] < -1. ? -1. : JetInfo.TagVarCSV_flightDistance3dSig[iJet]);
 
       // loop over tracks to get IPs
       std::vector<float> IP2Ds;
@@ -237,8 +241,8 @@ TagVarExtractor::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup
       std::vector<float> JetDist;
       std::vector<float> DecayLenVal;
       for (int iTrk = JetInfo.Jet_nFirstTrkTagVarCSV[iJet]; iTrk < JetInfo.Jet_nLastTrkTagVarCSV[iJet]; ++iTrk){
-        IP2Ds.push_back( JetInfo.TagVarCSV_trackSip2dSig[iTrk] );
-        IP3Ds.push_back( JetInfo.TagVarCSV_trackSip3dSig[iTrk] );
+        IP2Ds.push_back( JetInfo.TagVarCSV_trackSip2dSig[iTrk] < dummyTrack ? dummyTrack : JetInfo.TagVarCSV_trackSip2dSig[iTrk] );
+        IP3Ds.push_back( JetInfo.TagVarCSV_trackSip3dSig[iTrk] < dummyTrack ? dummyTrack : JetInfo.TagVarCSV_trackSip3dSig[iTrk] );
         PtRel.push_back( JetInfo.TagVarCSV_trackPtRel[iTrk] );
 	DeltaR.push_back( JetInfo.TagVarCSV_trackDeltaR[iTrk] );
 	PtRatio.push_back( JetInfo.TagVarCSV_trackPtRatio[iTrk] );
@@ -264,10 +268,7 @@ TagVarExtractor::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup
 
       int numTracks = JetInfo.TagVarCSV_jetNTracks[iJet];
       int numEtaRelTracks = JetInfo.TagVarCSV_jetNTracksEtaRel[iJet];
-      float dummyTrack = -99.;
-      float dummyPtRel = -1.;
-      float dummyEtaRel = -1.;
-      float dummy = -0.1;
+
       // switch on the number of tracks in order to fill branches with a dummy if needed
       switch(numTracks){
         // if there are no selected tracks
