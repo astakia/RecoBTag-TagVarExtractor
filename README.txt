@@ -1,10 +1,10 @@
 RecoBTag-TagVarExtractor
 =========================
 This package depends on the RecoBTag/PerformanceMeasurements package. First follow the
-instructions at https://github.com/cms-btv-pog/RecoBTag-PerformanceMeasurements/tree/7_4_X
+instructions at https://github.com/cms-btv-pog/RecoBTag-PerformanceMeasurements/tree/8_0_X
 and then add the TagVarExtractor package
 
-git clone -b 7_4_X git@github.com:cms-btv-pog/RecoBTag-TagVarExtractor.git RecoBTag/TagVarExtractor
+git clone -b 8_0_X git@github.com:cms-btv-pog/RecoBTag-TagVarExtractor.git RecoBTag/TagVarExtractor
 
 scram b -j8
 
