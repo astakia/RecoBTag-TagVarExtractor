@@ -34,12 +34,12 @@ options.register('dumpPythonCfg', '',
     VarParsing.varType.string,
     "Name of the rewritten cfg file"
 )
-options.register('inputTDir', 'btaganaSubJets',
+options.register('inputTDir', 'btaganaFatJets',
     VarParsing.multiplicity.singleton,
     VarParsing.varType.string,
-    "TDirectory containing the input jet TTree"
+    "TDirectory containing the input TTree"
 )
-options.register('inputEventTDir', 'btagana',
+options.register('inputEventTDir', 'btaganaFatJets',
     VarParsing.multiplicity.singleton,
     VarParsing.varType.string,
     "TDirectory containing the input event TTree"
@@ -49,7 +49,7 @@ options.register('varPrefix', 'FatJetInfo',
     VarParsing.varType.string,
     "Variable name prefix such as 'JetInfo', 'FatJetInfo' or an empty string"
 )
-options.register('varPrefixSubjets', 'JetInfo',
+options.register('varPrefixSubjets', 'SoftDropSubJetInfo',
     VarParsing.multiplicity.singleton,
     VarParsing.varType.string,
     "Variable name prefix for subjets"
@@ -91,7 +91,7 @@ options.register('doBosonMatching', False,
 )
 
 ## 'maxEvents' is already registered by the Framework, changing default value
-options.setDefault('maxEvents', 2000)
+options.setDefault('maxEvents', -1)
 
 options.parseArguments()
 
@@ -112,13 +112,13 @@ process.source = cms.Source("EmptySource")
 process.options = cms.untracked.PSet( wantSummary = cms.untracked.bool(options.wantSummary) )
 
 ## Input files
-inputFiles = []
+inputFiles = ['JetTree_mc_FatJets_Subjets.root']
 ## If using external input files
 if options.useExternalInput:
     inputFiles = open(options.externalInput,"r").read().splitlines()
-else:
-    import QCDFiles_cff
-    inputFiles = QCDFiles_cff.inputFiles
+#else:
+    #import InputFiles_cff
+    #inputFiles = QCDFiles_cff.inputFiles
 
 ## Output file
 process.TFileService = cms.Service("TFileService",
