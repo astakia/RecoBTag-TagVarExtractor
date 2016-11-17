@@ -44,12 +44,12 @@ options.register('varPrefix', '',
     VarParsing.varType.string,
     "Variable name prefix such as 'JetInfo', 'FatJetInfo' or an empty string"
 )
-options.register('jetPtMin', 100.,
+options.register('jetPtMin', 20.,
     VarParsing.multiplicity.singleton,
     VarParsing.varType.float,
     "Minimum jet Pt"
 )
-options.register('jetPtMax', 170.,
+options.register('jetPtMax', 99999.,
     VarParsing.multiplicity.singleton,
     VarParsing.varType.float,
     "Maximum jet Pt"
@@ -59,14 +59,14 @@ options.register('jetAbsEtaMin', 0.,
     VarParsing.varType.float,
     "Minimum jet |eta|"
 )
-options.register('jetAbsEtaMax', 1.2,
+options.register('jetAbsEtaMax', 2.5,
     VarParsing.multiplicity.singleton,
     VarParsing.varType.float,
     "Maximum jet |eta|"
 )
 
 ## 'maxEvents' is already registered by the Framework, changing default value
-options.setDefault('maxEvents', 2000)
+options.setDefault('maxEvents', -1)
 
 options.parseArguments()
 
@@ -87,7 +87,8 @@ process.source = cms.Source("EmptySource")
 process.options = cms.untracked.PSet( wantSummary = cms.untracked.bool(options.wantSummary) )
 
 ## Input files
-inputFiles = ['JetTree_mc_subjets.root']
+inputFiles = ['JetTree_mc.root']
+
 ## If using external input files
 if options.useExternalInput:
     inputFiles = open(options.externalInput,"r").read().splitlines()
