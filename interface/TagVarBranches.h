@@ -14,7 +14,7 @@ class TagVarBranches {
     float Jet_eta;
     float Jet_phi;
     float Jet_mass;
-    float Jet_massGroomed;
+    float Jet_massPruned;
     float Jet_flavour;
     float Jet_nbHadrons;
     float Jet_JP;
@@ -23,6 +23,7 @@ class TagVarBranches {
     float Jet_CSVIVF;
     float Jet_tau1;
     float Jet_tau2;
+    float Jet_higgs_matching;
 
     // CSV TaggingVariables
     // per jet
@@ -152,19 +153,20 @@ class TagVarBranches {
       //######################################
       // Fat jet variables
       //######################################
-      tree->Branch((name+"Jet_pt").c_str()          ,&Jet_pt          ,(name+"Jet_pt/F").c_str()          );
-      tree->Branch((name+"Jet_eta").c_str()         ,&Jet_eta         ,(name+"Jet_eta/F").c_str()         );
-      tree->Branch((name+"Jet_phi").c_str()         ,&Jet_phi         ,(name+"Jet_phi/F").c_str()         );
-      tree->Branch((name+"Jet_mass").c_str()        ,&Jet_mass        ,(name+"Jet_mass/F").c_str()        );
-      tree->Branch((name+"Jet_massGroomed").c_str() ,&Jet_massGroomed ,(name+"Jet_massGroomed/F").c_str() );
-      tree->Branch((name+"Jet_flavour").c_str()     ,&Jet_flavour     ,(name+"Jet_flavour/F").c_str()     );
-      tree->Branch((name+"Jet_nbHadrons").c_str()   ,&Jet_nbHadrons   ,(name+"Jet_nbHadrons/F").c_str()   );
-      tree->Branch((name+"Jet_JP").c_str()          ,&Jet_JP          ,(name+"Jet_JP/F").c_str()          );
-      tree->Branch((name+"Jet_JBP").c_str()         ,&Jet_JBP         ,(name+"Jet_JBP/F").c_str()         );
-      tree->Branch((name+"Jet_CSV").c_str()         ,&Jet_CSV         ,(name+"Jet_CSV/F").c_str()         );
-      tree->Branch((name+"Jet_CSVIVF").c_str()      ,&Jet_CSVIVF      ,(name+"Jet_CSVIVF/F").c_str()      );
-      tree->Branch((name+"Jet_tau1").c_str()        ,&Jet_tau1        ,(name+"Jet_tau1/F").c_str()        );
-      tree->Branch((name+"Jet_tau2").c_str()        ,&Jet_tau2        ,(name+"Jet_tau2/F").c_str()        );
+      tree->Branch((name+"Jet_pt").c_str()         				,&Jet_pt          ,(name+"Jet_pt/F").c_str()          );
+      tree->Branch((name+"Jet_eta").c_str()         			,&Jet_eta         ,(name+"Jet_eta/F").c_str()         );
+      tree->Branch((name+"Jet_phi").c_str()         			,&Jet_phi         ,(name+"Jet_phi/F").c_str()         );
+      tree->Branch((name+"Jet_mass").c_str()        			,&Jet_mass        ,(name+"Jet_mass/F").c_str()        );
+      tree->Branch((name+"Jet_massPruned").c_str() 				,&Jet_massPruned ,(name+"Jet_massPruned/F").c_str()   );
+      tree->Branch((name+"Jet_flavour").c_str()     			,&Jet_flavour     ,(name+"Jet_flavour/F").c_str()     );
+      tree->Branch((name+"Jet_nbHadrons").c_str()   			,&Jet_nbHadrons   ,(name+"Jet_nbHadrons/F").c_str()   );
+      tree->Branch((name+"Jet_JP").c_str()          			,&Jet_JP          ,(name+"Jet_JP/F").c_str()          );
+      tree->Branch((name+"Jet_JBP").c_str()    		  		    ,&Jet_JBP         ,(name+"Jet_JBP/F").c_str()         );
+      tree->Branch((name+"Jet_CSV").c_str()         			,&Jet_CSV         ,(name+"Jet_CSV/F").c_str()         );
+      tree->Branch((name+"Jet_CSVIVF").c_str()      			,&Jet_CSVIVF      ,(name+"Jet_CSVIVF/F").c_str()      );
+      tree->Branch((name+"Jet_tau1").c_str()        			,&Jet_tau1        ,(name+"Jet_tau1/F").c_str()        );
+      tree->Branch((name+"Jet_tau2").c_str()        			,&Jet_tau2        ,(name+"Jet_tau2/F").c_str()        );
+      tree->Branch((name+"Jet_higgs_matching").c_str()        	,&Jet_higgs_matching,(name+"Jet_higgs_matching/F").c_str());
       //--------------------------------------
       // CSV TaggingVariables
       //--------------------------------------
@@ -289,19 +291,20 @@ class TagVarBranches {
       //######################################
       // Fat jet variables
       //######################################
-      tree->SetBranchAddress((name+"Jet_pt").c_str()          ,&Jet_pt          );
-      tree->SetBranchAddress((name+"Jet_eta").c_str()         ,&Jet_eta         );
-      tree->SetBranchAddress((name+"Jet_phi").c_str()         ,&Jet_phi         );
-      tree->SetBranchAddress((name+"Jet_mass").c_str()        ,&Jet_mass        );
-      tree->SetBranchAddress((name+"Jet_massGroomed").c_str() ,&Jet_massGroomed );
-      tree->SetBranchAddress((name+"Jet_flavour").c_str()     ,&Jet_flavour     );
-      tree->SetBranchAddress((name+"Jet_nbHadrons").c_str()   ,&Jet_nbHadrons   );
-      tree->SetBranchAddress((name+"Jet_JP").c_str()          ,&Jet_JP          );
-      tree->SetBranchAddress((name+"Jet_JBP").c_str()         ,&Jet_JBP         );
-      tree->SetBranchAddress((name+"Jet_CSV").c_str()         ,&Jet_CSV         );
-      tree->SetBranchAddress((name+"Jet_CSVIVF").c_str()      ,&Jet_CSVIVF      );
-      tree->SetBranchAddress((name+"Jet_tau1").c_str()        ,&Jet_tau1        );
-      tree->SetBranchAddress((name+"Jet_tau2").c_str()        ,&Jet_tau2        );
+      tree->SetBranchAddress((name+"Jet_pt").c_str()          	,&Jet_pt          );
+      tree->SetBranchAddress((name+"Jet_eta").c_str()         	,&Jet_eta         );
+      tree->SetBranchAddress((name+"Jet_phi").c_str()         	,&Jet_phi         );
+      tree->SetBranchAddress((name+"Jet_mass").c_str()        	,&Jet_mass        );
+      tree->SetBranchAddress((name+"Jet_massPruned").c_str() 	,&Jet_massPruned  );
+      tree->SetBranchAddress((name+"Jet_flavour").c_str()     	,&Jet_flavour     );
+      tree->SetBranchAddress((name+"Jet_nbHadrons").c_str()   	,&Jet_nbHadrons   );
+      tree->SetBranchAddress((name+"Jet_JP").c_str()          	,&Jet_JP          );
+      tree->SetBranchAddress((name+"Jet_JBP").c_str()         	,&Jet_JBP         );
+      tree->SetBranchAddress((name+"Jet_CSV").c_str()         	,&Jet_CSV         );
+      tree->SetBranchAddress((name+"Jet_CSVIVF").c_str()      	,&Jet_CSVIVF      );
+      tree->SetBranchAddress((name+"Jet_tau1").c_str()        	,&Jet_tau1        );
+      tree->SetBranchAddress((name+"Jet_tau2").c_str()        	,&Jet_tau2        );
+      tree->SetBranchAddress((name+"Jet_higgs_matching").c_str(),&Jet_higgs_matching);
       //--------------------------------------
       // CSV TaggingVariables
       //--------------------------------------

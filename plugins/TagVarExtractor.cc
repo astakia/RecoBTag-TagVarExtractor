@@ -81,6 +81,7 @@ class TagVarExtractor : public edm::EDAnalyzer {
       EventInfoBranches EvtInfo;
       JetInfoBranches   JetInfo;
       JetInfoBranches   SubJetInfo;
+      SubJetInfoBranches SubJetSpecificInfo;
 
       // input trees
       TChain* JetTree;
@@ -187,11 +188,13 @@ TagVarExtractor::beginJob()
   else
     EvtInfo.ReadTree(JetTree);
   JetInfo.ReadTree(JetTree,varPrefix_);
-  JetInfo.ReadCSVTagVarTree(JetTree,varPrefix_);
+  //JetInfo.ReadCSVTagVarTree(JetTree,varPrefix_);
   JetInfo.ReadFatJetSpecificTree(JetTree,varPrefix_);
   SubJetInfo.ReadTree(JetTree,varPrefixSubjets_);
-  SubJetInfo.ReadCSVTagVarTree(JetTree,varPrefixSubjets_);
+  //SubJetInfo.ReadCSVTagVarTree(JetTree,varPrefixSubjets_);
   SubJetInfo.ReadSubJetSpecificTree(JetTree,varPrefixSubjets_);
+ 
+  SubJetSpecificInfo.ReadTree(JetTree,"FatJetInfo","SoftDrop");
 }
 
 // ------------ method called for each event  ------------
@@ -233,16 +236,30 @@ TagVarExtractor::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup
       }
     }
 
+    //higgs to be used in higgs matching
+    std::vector<TLorentzVector> h_bosons;
+    for(int iPart = 0; iPart < EvtInfo.nGenPruned; ++iPart)
+    {
+      if(EvtInfo.GenPruned_pdgID[iPart]==25)
+      {
+        TLorentzVector higgs;
+        higgs.SetPtEtaPhiM(EvtInfo.GenPruned_pT[iPart],EvtInfo.GenPruned_eta[iPart],EvtInfo.GenPruned_phi[iPart],EvtInfo.GenPruned_mass[iPart]);
+        h_bosons.push_back(higgs);
+      }
+
+    }
+
+
     //---------------------------- Start fat jet loop ---------------------------------------//
     for(int iJet = 0; iJet < JetInfo.nJet; ++iJet)
     {
       if ( JetInfo.Jet_pt[iJet] < jetPtMin_ ||
-           JetInfo.Jet_pt[iJet] > jetPtMax_ ) continue;                  // apply jet pT cut
+           JetInfo.Jet_pt[iJet] > jetPtMax_ )continue;                  // apply jet pT cut
       if ( fabs(JetInfo.Jet_eta[iJet]) < fabs(jetAbsEtaMin_) ||
-           fabs(JetInfo.Jet_eta[iJet]) > fabs(jetAbsEtaMax_) ) continue; // apply jet eta cut
-      if ( JetInfo.Jet_massGroomed[iJet] < jetMassMin_ ||
-           JetInfo.Jet_massGroomed[iJet] > jetMassMax_ ) continue;       // apply jet mass cut
-      if ( JetInfo.Jet_nSubJets[iJet] != 2 ) continue;                   // require exactly 2 subjets
+           fabs(JetInfo.Jet_eta[iJet]) > fabs(jetAbsEtaMax_) )continue; // apply jet eta cut
+      if ( JetInfo.Jet_massPruned[iJet] < jetMassMin_ ||
+           JetInfo.Jet_massPruned[iJet] > jetMassMax_ )continue;       // apply jet mass cut
+      if ( SubJetSpecificInfo.Jet_nSubJets[iJet] != 2 )continue;                   // require exactly 2 subjets
 
       bool isBosonMatched = false;
       // perform boson matching
@@ -260,6 +277,16 @@ TagVarExtractor::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup
       else
         isBosonMatched = true;
  
+      float higgsMatching = 0;
+      for (size_t i=0; i<h_bosons.size(); i++)
+      {
+        if(reco::deltaR(h_bosons.at(i).Eta(),h_bosons.at(i).Phi(),JetInfo.Jet_eta[iJet], JetInfo.Jet_phi[iJet] ) < 0.5 )
+        {
+          higgsMatching = 1;
+          break;
+        }
+      }
+
       // skip the jet if not matched to a boson
       if( !isBosonMatched ) continue;
 
@@ -268,19 +295,20 @@ TagVarExtractor::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup
       //######################################
       // Fat jet variables
       //######################################
-      TagVarInfo.Jet_pt          = JetInfo.Jet_pt[iJet];
-      TagVarInfo.Jet_eta         = JetInfo.Jet_eta[iJet];
-      TagVarInfo.Jet_phi         = JetInfo.Jet_phi[iJet];
-      TagVarInfo.Jet_mass        = JetInfo.Jet_mass[iJet];
-      TagVarInfo.Jet_massGroomed = JetInfo.Jet_massGroomed[iJet];
-      TagVarInfo.Jet_flavour     = JetInfo.Jet_flavour[iJet];
-      TagVarInfo.Jet_nbHadrons   = JetInfo.Jet_nbHadrons[iJet];
-      TagVarInfo.Jet_JP          = JetInfo.Jet_Proba[iJet];
-      TagVarInfo.Jet_JBP         = JetInfo.Jet_Bprob[iJet];
-      TagVarInfo.Jet_CSV         = JetInfo.Jet_CombSvx[iJet];
-      TagVarInfo.Jet_CSVIVF      = JetInfo.Jet_CombIVF[iJet];
-      TagVarInfo.Jet_tau1        = JetInfo.Jet_tau1[iJet];
-      TagVarInfo.Jet_tau2        = JetInfo.Jet_tau2[iJet];
+      TagVarInfo.Jet_pt             = JetInfo.Jet_pt[iJet];
+      TagVarInfo.Jet_eta            = JetInfo.Jet_eta[iJet];
+      TagVarInfo.Jet_phi            = JetInfo.Jet_phi[iJet];
+      TagVarInfo.Jet_mass           = JetInfo.Jet_mass[iJet];
+      TagVarInfo.Jet_massPruned     = JetInfo.Jet_massPruned[iJet];
+      TagVarInfo.Jet_flavour        = JetInfo.Jet_flavour[iJet];
+      TagVarInfo.Jet_nbHadrons      = JetInfo.Jet_nbHadrons[iJet];
+      TagVarInfo.Jet_JP             = JetInfo.Jet_Proba[iJet];
+      TagVarInfo.Jet_JBP            = JetInfo.Jet_Bprob[iJet];
+      TagVarInfo.Jet_CSV            = JetInfo.Jet_CombSvx[iJet];
+      TagVarInfo.Jet_CSVIVF         = JetInfo.Jet_CombIVF[iJet];
+      TagVarInfo.Jet_tau1           = JetInfo.Jet_tau1[iJet];
+      TagVarInfo.Jet_tau2           = JetInfo.Jet_tau2[iJet];
+      TagVarInfo.Jet_higgs_matching = higgsMatching;
 
       TagVarInfo.TagVarCSV_jetNTracks              = JetInfo.TagVarCSV_jetNTracks[iJet];
       TagVarInfo.TagVarCSV_jetNTracksEtaRel        = JetInfo.TagVarCSV_jetNTracksEtaRel[iJet];
@@ -497,7 +525,6 @@ TagVarExtractor::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup
           TagVarInfo.TagVarCSV_trackPtRel_3 = PtRel.at(3);
           TagVarInfo.TagVarCSV_trackPtRel_4 = PtRel.at(4);
           TagVarInfo.TagVarCSV_trackPtRel_5 = PtRel.at(5);
-
       } // end switch on number of tracks for IP
 
       // switch on the number of etarel tracks in order to fill branches with a dummy if needed
@@ -529,12 +556,11 @@ TagVarExtractor::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup
           TagVarInfo.TagVarCSV_trackEtaRel_0 = etaRels.at(0);
           TagVarInfo.TagVarCSV_trackEtaRel_1 = etaRels.at(1);
           TagVarInfo.TagVarCSV_trackEtaRel_2 = etaRels.at(2);
-
       } // end switch on number of etarel tracks
 
       // get the indices of the two subjets
-      int iSubJet1 = JetInfo.SubJetIdx[JetInfo.Jet_nFirstSJ[iJet]];
-      int iSubJet2 = JetInfo.SubJetIdx[JetInfo.Jet_nFirstSJ[iJet]+1];
+      int iSubJet1 = SubJetSpecificInfo.SubJetIdx[SubJetSpecificInfo.Jet_nFirstSJ[iJet]];
+      int iSubJet2 = SubJetSpecificInfo.SubJetIdx[SubJetSpecificInfo.Jet_nFirstSJ[iJet]+1];
       //  order subjets by pT if that's not the case already
       if( SubJetInfo.Jet_pt[iSubJet1] < SubJetInfo.Jet_pt[iSubJet2] )
       {
@@ -615,7 +641,6 @@ TagVarExtractor::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup
           TagVarInfo.TagVarCSV1_trackEtaRel_0 = etaRels1.at(0);
           TagVarInfo.TagVarCSV1_trackEtaRel_1 = etaRels1.at(1);
           TagVarInfo.TagVarCSV1_trackEtaRel_2 = etaRels1.at(2);
-
       } // end switch on number of etarel tracks
 
       //######################################
@@ -690,8 +715,8 @@ TagVarExtractor::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup
           TagVarInfo.TagVarCSV2_trackEtaRel_0 = etaRels2.at(0);
           TagVarInfo.TagVarCSV2_trackEtaRel_1 = etaRels2.at(1);
           TagVarInfo.TagVarCSV2_trackEtaRel_2 = etaRels2.at(2);
-
       } // end switch on number of etarel tracks
+
 
       TagVarTree->Fill();
     }
