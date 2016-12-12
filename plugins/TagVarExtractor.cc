@@ -308,7 +308,43 @@ TagVarExtractor::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup
       TagVarInfo.Jet_CSVIVF         = JetInfo.Jet_CombIVF[iJet];
       TagVarInfo.Jet_tau1           = JetInfo.Jet_tau1[iJet];
       TagVarInfo.Jet_tau2           = JetInfo.Jet_tau2[iJet];
-      TagVarInfo.Jet_higgs_matching = higgsMatching;
+      TagVarInfo.Jet_ptPruned       = JetInfo.Jet_ptPruned[iJet];
+      TagVarInfo.Jet_etaPruned      = JetInfo.Jet_etaPruned[iJet];
+
+      TagVarInfo.Jet_higgs_matching             = higgsMatching;
+      TagVarInfo.Jet_z_ratio                    = JetInfo.Jet_z_ratio[iJet];
+      TagVarInfo.Jet_BDTG_SV                    = JetInfo.Jet_BDTG_SV[iJet];
+      TagVarInfo.Jet_ntracks                    = JetInfo.Jet_ntracks[iJet];
+      TagVarInfo.Jet_nSV_fat                    = JetInfo.Jet_nSV_fat[iJet];
+      //TagVarInfo.Jet_PFElectron_ratio           = JetInfo.Jet_PFElectron_ratio[iJet];
+      //TagVarInfo.Jet_PFElectron_ptrel           = JetInfo.Jet_PFElectron_ptrel[iJet];
+      TagVarInfo.Jet_trackSip3dSig_0            = JetInfo.Jet_trackSip3dSig_0[iJet];  
+      TagVarInfo.Jet_trackSip3dSig_1            = JetInfo.Jet_trackSip3dSig_1[iJet];
+      TagVarInfo.Jet_trackSip3dSig_2            = JetInfo.Jet_trackSip3dSig_2[iJet];
+      TagVarInfo.Jet_trackSip3dSig_3            = JetInfo.Jet_trackSip3dSig_3[iJet];
+      TagVarInfo.Jet_trackSip2dSigAboveCharm_0  = JetInfo.Jet_trackSip2dSigAboveCharm_0[iJet];
+      TagVarInfo.Jet_trackSip2dSigAboveBottom_0 = JetInfo.Jet_trackSip2dSigAboveBottom_0[iJet];
+      TagVarInfo.Jet_trackSip2dSigAboveBottom_1 = JetInfo.Jet_trackSip2dSigAboveBottom_1[iJet];
+
+      TagVarInfo.Jet_tau1_trackEtaRel_0         = JetInfo.Jet_tau1_trackEtaRel_0[iJet];
+      TagVarInfo.Jet_tau1_trackEtaRel_1         = JetInfo.Jet_tau1_trackEtaRel_1[iJet];
+      TagVarInfo.Jet_tau1_trackEtaRel_2         = JetInfo.Jet_tau1_trackEtaRel_2[iJet];
+      TagVarInfo.Jet_tau1_vertexMass            = JetInfo.Jet_tau1_vertexMass[iJet];
+      TagVarInfo.Jet_tau1_vertexEnergyRatio     = JetInfo.Jet_tau1_vertexEnergyRatio[iJet];
+      TagVarInfo.Jet_tau1_flightDistance2dSig   = JetInfo.Jet_tau1_flightDistance2dSig[iJet];
+      TagVarInfo.Jet_tau1_trackSip3dSig_0       = JetInfo.Jet_tau1_trackSip3dSig_0[iJet];
+      TagVarInfo.Jet_tau1_trackSip3dSig_1       = JetInfo.Jet_tau1_trackSip3dSig_1[iJet];
+      TagVarInfo.Jet_tau1_vertexDeltaR          = JetInfo.Jet_tau1_vertexDeltaR[iJet];
+
+      TagVarInfo.Jet_tau2_trackEtaRel_0         = JetInfo.Jet_tau2_trackEtaRel_0[iJet];
+      TagVarInfo.Jet_tau2_trackEtaRel_1         = JetInfo.Jet_tau2_trackEtaRel_1[iJet];
+      TagVarInfo.Jet_tau2_trackEtaRel_2         = JetInfo.Jet_tau2_trackEtaRel_2[iJet];
+      TagVarInfo.Jet_tau2_vertexMass            = JetInfo.Jet_tau2_vertexMass[iJet];
+      TagVarInfo.Jet_tau2_vertexEnergyRatio     = JetInfo.Jet_tau2_vertexEnergyRatio[iJet];
+      TagVarInfo.Jet_tau2_flightDistance2dSig   = JetInfo.Jet_tau2_flightDistance2dSig[iJet];
+      TagVarInfo.Jet_tau2_trackSip3dSig_0       = JetInfo.Jet_tau2_trackSip3dSig_0[iJet];
+      TagVarInfo.Jet_tau2_trackSip3dSig_1       = JetInfo.Jet_tau2_trackSip3dSig_1[iJet];
+      TagVarInfo.Jet_tau2_vertexDeltaR          = JetInfo.Jet_tau2_vertexDeltaR[iJet];
 
       TagVarInfo.TagVarCSV_jetNTracks              = JetInfo.TagVarCSV_jetNTracks[iJet];
       TagVarInfo.TagVarCSV_jetNTracksEtaRel        = JetInfo.TagVarCSV_jetNTracksEtaRel[iJet];

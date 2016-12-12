@@ -24,6 +24,44 @@ class TagVarBranches {
     float Jet_tau1;
     float Jet_tau2;
     float Jet_higgs_matching;
+    float Jet_z_ratio;
+    float Jet_BDTG_SV;
+    float Jet_ntracks;
+    float Jet_nSV_fat;
+    float Jet_trackSip3dSig_0;
+    float Jet_trackSip3dSig_1;
+    float Jet_trackSip3dSig_2;
+    float Jet_trackSip3dSig_3;
+    float Jet_trackSip2dSigAboveBottom_0;
+    float Jet_trackSip2dSigAboveBottom_1;
+    float Jet_ptPruned;
+    float Jet_etaPruned;
+    
+    float Jet_tau1_trackEtaRel_0;
+    float Jet_tau1_trackEtaRel_1;
+    float Jet_tau1_trackEtaRel_2;
+    float Jet_tau1_vertexMass;
+    float Jet_tau1_vertexEnergyRatio;
+    float Jet_tau1_flightDistance2dSig;
+    float Jet_tau1_trackSip3dSig_0;
+    float Jet_tau1_trackSip3dSig_1;
+    float Jet_tau1_vertexDeltaR;
+    
+    float Jet_tau2_trackEtaRel_0;
+    float Jet_tau2_trackEtaRel_1;
+    float Jet_tau2_trackEtaRel_2;
+    float Jet_tau2_vertexMass;
+    float Jet_tau2_vertexEnergyRatio;
+    float Jet_tau2_flightDistance2dSig;
+    float Jet_tau2_trackSip3dSig_0;
+    float Jet_tau2_trackSip3dSig_1;
+    float Jet_tau2_vertexDeltaR;
+
+
+    float Jet_trackSip2dSigAboveCharm_0;
+    float Jet_PFElectron_ratio;
+    float Jet_PFElectron_ptrel;
+
 
     // CSV TaggingVariables
     // per jet
@@ -157,16 +195,53 @@ class TagVarBranches {
       tree->Branch((name+"Jet_eta").c_str()         			,&Jet_eta         ,(name+"Jet_eta/F").c_str()         );
       tree->Branch((name+"Jet_phi").c_str()         			,&Jet_phi         ,(name+"Jet_phi/F").c_str()         );
       tree->Branch((name+"Jet_mass").c_str()        			,&Jet_mass        ,(name+"Jet_mass/F").c_str()        );
-      tree->Branch((name+"Jet_massPruned").c_str() 				,&Jet_massPruned ,(name+"Jet_massPruned/F").c_str()   );
+      tree->Branch((name+"Jet_massPruned").c_str() 				,&Jet_massPruned  ,(name+"Jet_massPruned/F").c_str()  );
       tree->Branch((name+"Jet_flavour").c_str()     			,&Jet_flavour     ,(name+"Jet_flavour/F").c_str()     );
       tree->Branch((name+"Jet_nbHadrons").c_str()   			,&Jet_nbHadrons   ,(name+"Jet_nbHadrons/F").c_str()   );
       tree->Branch((name+"Jet_JP").c_str()          			,&Jet_JP          ,(name+"Jet_JP/F").c_str()          );
-      tree->Branch((name+"Jet_JBP").c_str()    		  		    ,&Jet_JBP         ,(name+"Jet_JBP/F").c_str()         );
+      tree->Branch((name+"Jet_JBP").c_str()    		  		  ,&Jet_JBP         ,(name+"Jet_JBP/F").c_str()         );
       tree->Branch((name+"Jet_CSV").c_str()         			,&Jet_CSV         ,(name+"Jet_CSV/F").c_str()         );
       tree->Branch((name+"Jet_CSVIVF").c_str()      			,&Jet_CSVIVF      ,(name+"Jet_CSVIVF/F").c_str()      );
       tree->Branch((name+"Jet_tau1").c_str()        			,&Jet_tau1        ,(name+"Jet_tau1/F").c_str()        );
       tree->Branch((name+"Jet_tau2").c_str()        			,&Jet_tau2        ,(name+"Jet_tau2/F").c_str()        );
-      tree->Branch((name+"Jet_higgs_matching").c_str()        	,&Jet_higgs_matching,(name+"Jet_higgs_matching/F").c_str());
+      tree->Branch((name+"Jet_higgs_matching").c_str()    ,&Jet_higgs_matching,(name+"Jet_higgs_matching/F").c_str());
+      tree->Branch((name+"Jet_z_ratio").c_str()           ,&Jet_z_ratio     ,(name+"Jet_z_ratio/F").c_str()     );
+      tree->Branch((name+"Jet_BDTG_SV").c_str()           ,&Jet_BDTG_SV     ,(name+"Jet_BDTG_SV/F").c_str()     );
+      tree->Branch((name+"Jet_ntracks").c_str()           ,&Jet_ntracks     ,(name+"Jet_ntracks/F").c_str()     );
+      tree->Branch((name+"Jet_nSV_fat").c_str()           ,&Jet_nSV_fat     ,(name+"Jet_nSV_fat/F").c_str()     );
+      tree->Branch((name+"Jet_ptPruned").c_str()          ,&Jet_ptPruned    ,(name+"Jet_ptPruned/F").c_str()    );
+      tree->Branch((name+"Jet_etaPruned").c_str()          ,&Jet_etaPruned    ,(name+"Jet_etaPruned/F").c_str() );
+
+      //tree->Branch((name+"Jet_PFElectron_ratio").c_str()  ,&Jet_PFElectron_ratio                         ,(name+"Jet_PFElectron_ratio/F").c_str());
+      //tree->Branch((name+"Jet_PFElectron_ptrel").c_str()  ,&Jet_PFElectron_ptrel                         ,(name+"Jet_PFElectron_ptrel/F").c_str());
+      tree->Branch((name+"Jet_trackSip3dSig_0").c_str()   ,&Jet_trackSip3dSig_0                          ,(name+"Jet_trackSip3dSig_0/F").c_str());
+      tree->Branch((name+"Jet_trackSip3dSig_1").c_str()   ,&Jet_trackSip3dSig_1                          ,(name+"Jet_trackSip3dSig_1/F").c_str());
+      tree->Branch((name+"Jet_trackSip3dSig_2").c_str()   ,&Jet_trackSip3dSig_2                          ,(name+"Jet_trackSip3dSig_2/F").c_str());
+      tree->Branch((name+"Jet_trackSip3dSig_3").c_str()   ,&Jet_trackSip3dSig_3                          ,(name+"Jet_trackSip3dSig_3/F").c_str());
+      tree->Branch((name+"Jet_trackSip2dSigAboveCharm_0").c_str(),   &Jet_trackSip2dSigAboveCharm_0      ,(name+"Jet_trackSip2dSigAboveCharm_0/F").c_str());
+      tree->Branch((name+"Jet_trackSip2dSigAboveBottom_0").c_str(),  &Jet_trackSip2dSigAboveBottom_0     ,(name+"Jet_trackSip2dSigAboveBottom_0/F").c_str());
+      tree->Branch((name+"Jet_trackSip2dSigAboveBottom_1").c_str(),  &Jet_trackSip2dSigAboveBottom_1     ,(name+"Jet_trackSip2dSigAboveBottom_1/F").c_str());     
+  
+      tree->Branch((name+"Jet_tau1_trackEtaRel_0").c_str()    ,&Jet_tau1_trackEtaRel_0                       ,(name+"tau1_trackEtaRel_0/F").c_str());
+      tree->Branch((name+"Jet_tau1_trackEtaRel_1").c_str()    ,&Jet_tau1_trackEtaRel_1                       ,(name+"tau1_trackEtaRel_1/F").c_str());
+      tree->Branch((name+"Jet_tau1_trackEtaRel_2").c_str()    ,&Jet_tau1_trackEtaRel_2                       ,(name+"tau1_trackEtaRel_2/F").c_str());
+      tree->Branch((name+"Jet_tau1_vertexMass").c_str()       ,&Jet_tau1_vertexMass                          ,(name+"Jet_tau1_vertexMass/F").c_str());
+      tree->Branch((name+"Jet_tau1_vertexEnergyRatio").c_str(),&Jet_tau1_vertexEnergyRatio                   ,(name+"Jet_tau1_vertexEnergyRatio/F").c_str());
+      tree->Branch((name+"Jet_tau1_flightDistance2dSig").c_str(),&Jet_tau1_flightDistance2dSig               ,(name+"Jet_tau1_flightDistance2dSig/F").c_str());
+      tree->Branch((name+"Jet_tau1_trackSip3dSig_0").c_str() ,&Jet_tau1_trackSip3dSig_0                      ,(name+"Jet_tau1_trackSip3dSig_0/F").c_str());
+      tree->Branch((name+"Jet_tau1_trackSip3dSig_1").c_str() ,&Jet_tau1_trackSip3dSig_1                      ,(name+"Jet_tau1_trackSip3dSig_1/F").c_str());
+      tree->Branch((name+"Jet_tau1_vertexDeltaR").c_str()    ,&Jet_tau1_vertexDeltaR                         ,(name+"Jet_tau1_vertexDeltaR/F").c_str());
+
+      tree->Branch((name+"Jet_tau2_trackEtaRel_0").c_str()    ,&Jet_tau2_trackEtaRel_0                       ,(name+"tau2_trackEtaRel_0/F").c_str());
+      tree->Branch((name+"Jet_tau2_trackEtaRel_1").c_str()    ,&Jet_tau2_trackEtaRel_1                       ,(name+"tau2_trackEtaRel_1/F").c_str());
+      tree->Branch((name+"Jet_tau2_trackEtaRel_2").c_str()    ,&Jet_tau2_trackEtaRel_2                       ,(name+"tau2_trackEtaRel_2/F").c_str());
+      tree->Branch((name+"Jet_tau2_vertexMass").c_str()       ,&Jet_tau2_vertexMass                          ,(name+"Jet_tau2_vertexMass/F").c_str());
+      tree->Branch((name+"Jet_tau2_vertexEnergyRatio").c_str(),&Jet_tau2_vertexEnergyRatio                   ,(name+"Jet_tau2_vertexEnergyRatio/F").c_str());
+      tree->Branch((name+"Jet_tau2_flightDistance2dSig").c_str(),&Jet_tau2_flightDistance2dSig               ,(name+"Jet_tau2_flightDistance2dSig/F").c_str());
+      tree->Branch((name+"Jet_tau2_trackSip3dSig_0").c_str()  ,&Jet_tau2_trackSip3dSig_0                     ,(name+"Jet_tau2_trackSip3dSig_0/F").c_str());
+      tree->Branch((name+"Jet_tau2_trackSip3dSig_1").c_str()  ,&Jet_tau2_trackSip3dSig_1                     ,(name+"Jet_tau2_trackSip3dSig_1/F").c_str());
+      tree->Branch((name+"Jet_tau2_vertexDeltaR").c_str()    ,&Jet_tau2_vertexDeltaR                         ,(name+"Jet_tau2_vertexDeltaR/F").c_str());
+  
       //--------------------------------------
       // CSV TaggingVariables
       //--------------------------------------
@@ -295,7 +370,7 @@ class TagVarBranches {
       tree->SetBranchAddress((name+"Jet_eta").c_str()         	,&Jet_eta         );
       tree->SetBranchAddress((name+"Jet_phi").c_str()         	,&Jet_phi         );
       tree->SetBranchAddress((name+"Jet_mass").c_str()        	,&Jet_mass        );
-      tree->SetBranchAddress((name+"Jet_massPruned").c_str() 	,&Jet_massPruned  );
+      tree->SetBranchAddress((name+"Jet_massPruned").c_str() 	  ,&Jet_massPruned  );
       tree->SetBranchAddress((name+"Jet_flavour").c_str()     	,&Jet_flavour     );
       tree->SetBranchAddress((name+"Jet_nbHadrons").c_str()   	,&Jet_nbHadrons   );
       tree->SetBranchAddress((name+"Jet_JP").c_str()          	,&Jet_JP          );
@@ -305,6 +380,43 @@ class TagVarBranches {
       tree->SetBranchAddress((name+"Jet_tau1").c_str()        	,&Jet_tau1        );
       tree->SetBranchAddress((name+"Jet_tau2").c_str()        	,&Jet_tau2        );
       tree->SetBranchAddress((name+"Jet_higgs_matching").c_str(),&Jet_higgs_matching);
+      tree->SetBranchAddress((name+"Jet_z_ratio").c_str()       ,&Jet_z_ratio     );
+      tree->SetBranchAddress((name+"Jet_BDTG_SV").c_str()       ,&Jet_BDTG_SV     );
+      tree->SetBranchAddress((name+"Jet_ntracks").c_str()       ,&Jet_ntracks     );
+      tree->SetBranchAddress((name+"Jet_nSV_fat").c_str()       ,&Jet_nSV_fat     );
+      tree->SetBranchAddress((name+"Jet_ptPruned").c_str()      ,&Jet_ptPruned    );
+      tree->SetBranchAddress((name+"Jet_etaPruned").c_str()      ,&Jet_etaPruned  );
+
+
+    //tree->SetBranchAddress((name+"Jet_PFElectron_ratio").c_str(),&Jet_PFElectron_ratio);
+    //tree->SetBranchAddress((name+"Jet_PFElectron_ptrel").c_str(),&Jet_PFElectron_ptrel);
+      tree->SetBranchAddress((name+"Jet_trackSip3dSig_0").c_str(),&Jet_trackSip3dSig_0);
+      tree->SetBranchAddress((name+"Jet_trackSip3dSig_1").c_str(),&Jet_trackSip3dSig_1);
+      tree->SetBranchAddress((name+"Jet_trackSip3dSig_2").c_str(),&Jet_trackSip3dSig_2);
+      tree->SetBranchAddress((name+"Jet_trackSip3dSig_3").c_str(),&Jet_trackSip3dSig_3);
+      tree->SetBranchAddress((name+"Jet_trackSip2dSigAboveCharm_0").c_str(),&Jet_trackSip2dSigAboveCharm_0);
+      tree->SetBranchAddress((name+"Jet_trackSip2dSigAboveBottom_0").c_str(),&Jet_trackSip2dSigAboveBottom_0);      
+      tree->SetBranchAddress((name+"Jet_trackSip2dSigAboveBottom_1").c_str(),&Jet_trackSip2dSigAboveBottom_1);
+
+      tree->SetBranchAddress((name+"Jet_tau1_trackEtaRel_0").c_str(),&Jet_tau1_trackEtaRel_0);
+      tree->SetBranchAddress((name+"Jet_tau1_trackEtaRel_1").c_str(),&Jet_tau1_trackEtaRel_1);
+      tree->SetBranchAddress((name+"Jet_tau1_trackEtaRel_2").c_str(),&Jet_tau1_trackEtaRel_2);
+      tree->SetBranchAddress((name+"Jet_tau1_vertexMass").c_str(),&Jet_tau1_vertexMass);
+      tree->SetBranchAddress((name+"Jet_tau1_vertexEnergyRatio").c_str(),&Jet_tau1_vertexEnergyRatio);
+      tree->SetBranchAddress((name+"Jet_tau1_flightDistance2dSig").c_str(),&Jet_tau1_flightDistance2dSig);
+      tree->SetBranchAddress((name+"Jet_tau1_trackSip3dSig_0").c_str(),&Jet_tau1_trackSip3dSig_0);
+      tree->SetBranchAddress((name+"Jet_tau1_trackSip3dSig_1").c_str(),&Jet_tau1_trackSip3dSig_1);
+      tree->SetBranchAddress((name+"Jet_tau1_vertexDeltaR").c_str(),&Jet_tau1_vertexDeltaR);
+
+      tree->SetBranchAddress((name+"Jet_tau2_trackEtaRel_0").c_str(),&Jet_tau2_trackEtaRel_0);
+      tree->SetBranchAddress((name+"Jet_tau2_trackEtaRel_1").c_str(),&Jet_tau2_trackEtaRel_1);
+      tree->SetBranchAddress((name+"Jet_tau2_trackEtaRel_2").c_str(),&Jet_tau2_trackEtaRel_2);
+      tree->SetBranchAddress((name+"Jet_tau2_vertexMass").c_str(),&Jet_tau2_vertexMass);
+      tree->SetBranchAddress((name+"Jet_tau2_vertexEnergyRatio").c_str(),&Jet_tau2_vertexEnergyRatio);
+      tree->SetBranchAddress((name+"Jet_tau2_flightDistance2dSig").c_str(),&Jet_tau2_flightDistance2dSig);
+      tree->SetBranchAddress((name+"Jet_tau2_trackSip3dSig_0").c_str(),&Jet_tau2_trackSip3dSig_0);
+      tree->SetBranchAddress((name+"Jet_tau2_trackSip3dSig_1").c_str(),&Jet_tau2_trackSip3dSig_1);
+      tree->SetBranchAddress((name+"Jet_tau2_vertexDeltaR").c_str(),&Jet_tau2_vertexDeltaR);
       //--------------------------------------
       // CSV TaggingVariables
       //--------------------------------------
